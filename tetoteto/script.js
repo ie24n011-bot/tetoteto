@@ -61,10 +61,25 @@ const tetrominos = [
         [0,1,1]
     ]
 ];
+
+const colors = [
+    "cyan",
+    "yellow",
+    "purple",
+    "orange",
+    "blue",
+    "green",
+    "red"
+];
+
 let tetromino =
     tetrominos[
         Math.floor(Math.random() * tetrominos.length)
     ];
+    let colorIndex =
+    Math.floor(Math.random() * colors.length);
+
+let currentColor = colors[colorIndex];
 
 let blockX = 4;
 let blockY = 0;
@@ -102,8 +117,8 @@ function draw() {
         for (let x = 0; x < COL; x++) {
 
             if (board[y][x]) {
-                drawBlock(x, y, "orange");
-            }
+    drawBlock(x, y, board[y][x]);
+}
         }
     }
 
@@ -114,9 +129,10 @@ function draw() {
             if (tetromino[y][x]) {
 
                 drawBlock(
-                    blockX + x,
-                    blockY + y
-                );
+    blockX + x,
+    blockY + y,
+    currentColor
+);
             }
         }
     }
@@ -156,7 +172,7 @@ function merge() {
 
             if (tetromino[y][x]) {
 
-                board[blockY + y][blockX + x] = 1;
+                board[blockY + y][blockX + x] = currentColor;
             }
         }
     }
@@ -216,6 +232,10 @@ function update() {
     tetrominos[
         Math.floor(Math.random() * tetrominos.length)
     ];
+    colorIndex =
+    Math.floor(Math.random() * colors.length);
+
+currentColor = colors[colorIndex];
 
         // ゲームオーバー
         if (collision()) {
@@ -259,6 +279,24 @@ document.addEventListener("keydown", (e) => {
             blockY++;
         }
     }
+         // 回転
+ if (e.key === "ArrowUp") {
+
+     let rotated = [];
+
+     for (let y = 0; y < tetromino[0].length; y++) {
+
+         rotated[y] = [];
+
+         for (let x = 0; x < tetromino.length; x++) {
+
+             rotated[y][x] =
+                 tetromino[tetromino.length - 1 - x][y];
+         }
+     }
+
+     tetromino = rotated;
+ }
 
     draw();
 });

@@ -16,13 +16,59 @@ for (let y = 0; y < ROW; y++) {
 }
 
 // ■ブロック
-const tetromino = [
-    [1, 1],
-    [1, 1]
+const tetrominos = [
+
+    // I
+    [
+        [1,1,1,1]
+    ],
+
+    // O
+    [
+        [1,1],
+        [1,1]
+    ],
+
+    // T
+    [
+        [0,1,0],
+        [1,1,1]
+    ],
+
+    // L
+    [
+        [1,0],
+        [1,0],
+        [1,1]
+    ],
+
+    // J
+    [
+        [0,1],
+        [0,1],
+        [1,1]
+    ],
+
+    // S
+    [
+        [0,1,1],
+        [1,1,0]
+    ],
+
+    // Z
+    [
+        [1,1,0],
+        [0,1,1]
+    ]
 ];
+let tetromino =
+    tetrominos[
+        Math.floor(Math.random() * tetrominos.length)
+    ];
 
 let blockX = 4;
 let blockY = 0;
+
 
 // 描画
 function drawBlock(x, y, color="cyan") {
@@ -166,6 +212,11 @@ function update() {
         blockX = 4;
         blockY = 0;
 
+        tetromino =
+    tetrominos[
+        Math.floor(Math.random() * tetrominos.length)
+    ];
+
         // ゲームオーバー
         if (collision()) {
 
@@ -196,7 +247,7 @@ document.addEventListener("keydown", (e) => {
     // 右
     if (e.key === "ArrowRight") {
 
-        if (blockX < COL - 2) {
+        if (blockX < COL - tetromino[0].length) {
             blockX++;
         }
     }
